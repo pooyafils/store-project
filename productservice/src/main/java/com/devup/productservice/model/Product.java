@@ -15,10 +15,10 @@ public class Product {
     @Id
     private int id;
     private String name;
-    @JsonBackReference //it can work with one side only
+   // @JsonBackReference //it can work with one side only dont put it in product
     @ManyToMany(targetEntity = Category.class,cascade = CascadeType.ALL )
     private List<Category> categories;
-
+    //@JsonBackReference //it can work with one side only  dont put it in product
     @ManyToMany(targetEntity = Provider.class,cascade = CascadeType.ALL)
     private List<Provider> providers;
 

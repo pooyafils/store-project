@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -34,5 +35,25 @@ productRepository.save(postProduct);
 return ResponseEntity.ok("");
 
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getById(@PathVariable int id){
 
+        return ResponseEntity.ok(productRepository.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Product> deleteById(@PathVariable int id){
+        Product product=productRepository.findById(id);
+        productRepository.delete(product);
+       return ResponseEntity.ok(product);
+    }
+@PutMapping("/{id}")
+    public ResponseEntity<Product> editProduct(@PathVariable int id,@RequestBody Product product){
+   Product editProduct   =  productRepository.findById(id);
+   editProduct.setProviders(product.getProviders());
+   editProduct.setName(product.getName());
+   editProduct.setCategories(product.getCategories());
+   return ResponseEntity.ok(productRepository.save(editProduct));
+
+}
 }

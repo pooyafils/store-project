@@ -14,8 +14,7 @@ public class Category {
     @Id
     private int id;
     private String name;
-    //@JsonBackReference
+    @JsonBackReference  // it can work with one side only dont put it in product
     @ManyToMany(mappedBy = "categories",cascade = CascadeType.ALL)
-
     private List<Product> products;
 }

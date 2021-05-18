@@ -26,7 +26,7 @@ public class ProductController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity <List<Product>> getAllProduct() {
-        return ResponseEntity.ok(productRepository.findAll());
+        return ResponseEntity.ok(productService.getAllProduct());
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,22 +43,22 @@ return ResponseEntity.ok(productService.saveProduct(product));
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable int id){
 
-        return ResponseEntity.ok(productRepository.findById(id));
+        return ResponseEntity.ok(productService.getById(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteById(@PathVariable int id){
-        Product product=productRepository.findById(id);
-        productRepository.delete(product);
-       return ResponseEntity.ok(product);
+      //  Product product=productRepository.findById(id);
+    //    productRepository.delete(product);
+       return ResponseEntity.ok(productService.deleteById(id));
     }
 @PutMapping("/{id}")
     public ResponseEntity<Product> editProduct(@PathVariable int id,@RequestBody Product product){
-   Product editProduct   =  productRepository.findById(id);
+/*   Product editProduct   =  productRepository.findById(id);
    editProduct.setProviders(product.getProviders());
    editProduct.setName(product.getName());
-   editProduct.setCategories(product.getCategories());
-   return ResponseEntity.ok(productRepository.save(editProduct));
+   editProduct.setCategories(product.getCategories());*/
+   return ResponseEntity.ok(productRepository.save(productService.editProduct(id,product)));
 
 }
 }

@@ -30,14 +30,15 @@ public class ProductController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> PostProduct(@RequestBody Product product){
+    public ResponseEntity PostProduct(@RequestBody Product product){
 
 /*Product postProduct=new Product();
 postProduct.setCategories(product.getCategories());
 postProduct.setName(product.getName());
 postProduct.setProviders(product.getProviders());
 productRepository.save(postProduct);*/
-return ResponseEntity.ok(productService.saveProduct(product));
+        productService.saveProduct(product);
+return ResponseEntity.ok("saved");
 
     }
     @GetMapping("/{id}")
@@ -61,4 +62,9 @@ return ResponseEntity.ok(productService.saveProduct(product));
    return ResponseEntity.ok(productRepository.save(productService.editProduct(id,product)));
 
 }
+    @GetMapping("/findbyname/{name}")
+    public List<Product> getProivderProduct(@PathVariable String name){
+
+        return productRepository.findByName(name);
+    }
 }

@@ -1,1 +1,1 @@
-insert into Product (id,name) values (1,'milk')
+insert into Product (id,name) values (1,'milk');

@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findByName(String name);
    @Query( value = " select * from  PRODUCT_PROVIDERS a  inner join   product b on  PROVIDERS_ID=? and a.PRODUCT_ID=b.id  ",
     nativeQuery = true)
-   Set<Product> findByProviders(int id);
+   List<Product> findByProviders(int id);
    
 }
 //SELECT

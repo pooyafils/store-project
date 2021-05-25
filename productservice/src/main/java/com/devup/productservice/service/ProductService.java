@@ -65,11 +65,12 @@ postProduct.setProviders(resultList);*/
 
             providerInstans.setName(p.getName());
             providerInstans.setId(p.getId());
-
+               Provider po=providerRepository.findByName(providerInstans.getName());
+             postProduct.addCategory(po);
         }
 
-        Provider p=providerRepository.findByName(providerInstans.getName());
-        postProduct.addCategory(p);
+     //   Provider p=providerRepository.findByName(providerInstans.getName());
+       // postProduct.addCategory(p);
 
 
 
@@ -100,4 +101,5 @@ postProduct.setProviders(resultList);*/
         editProduct.setCategories(product.getCategories());
         return editProduct;
     }
+
 }

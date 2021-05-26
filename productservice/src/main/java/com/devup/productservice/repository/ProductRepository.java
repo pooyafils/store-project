@@ -12,10 +12,16 @@ import java.util.Set;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
     Product findById(int id);
+
     List<Product> findByName(String name);
    @Query( value = " select * from  PRODUCT_PROVIDERS a  inner join   product b on  PROVIDERS_ID=? and a.PRODUCT_ID=b.id  ",
     nativeQuery = true)
    List<Product> findByProviders(int id);
+
+
+    @Query( value = " select * from  PRODUCT_CATEGORIES  a  inner join   product b on  CATEGORIES_ID=? and a.PRODUCTS_ID=b.id  ",
+            nativeQuery = true)
+    List<Product> findByCategories(int id);
    
 }
 //SELECT

@@ -1,64 +1,38 @@
 package com.devup.productservice.service;
 
+import com.devup.productservice.model.Category;
 import com.devup.productservice.model.Product;
 import com.devup.productservice.model.Provider;
+import com.devup.productservice.repository.CategoryRepository;
 import com.devup.productservice.repository.ProductRepository;
 import com.devup.productservice.repository.ProviderRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.swing.text.html.HTMLDocument;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class ProductService {
 
     ProductRepository productRepository;
     ProviderRepository providerRepository;
+    CategoryRepository categoryRepository;
+    CategoryService categoryService;
 
-    public ProductService(ProductRepository productRepository,
-                          ProviderRepository providerRepository) {
+    public ProductService(ProductRepository productRepository, ProviderRepository providerRepository,
+                          CategoryRepository categoryRepository, CategoryService categoryService) {
         this.productRepository = productRepository;
         this.providerRepository = providerRepository;
+        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     public void saveProduct(Product product){
         Product postProduct=new Product();
         postProduct.setCategories(product.getCategories());
         postProduct.setName(product.getName());
-      /*  Set<Provider> object=new HashSet<>();
-           object=     product.getProviders();
-        List<Provider> database=     providerRepository.findAll();
-        Set<Provider> resultList = new ArrayList<Provider>();
-        for(Provider user1 : database) {
-            for(Provider user2 : object) {
-                if(user1.getName().equals(user2.getName())) {
-                    resultList.add(user2);
-                }
-                //   System.out.println(resultList);
 
-            }
-
-        }
-        resultList.stream().map(x->x.getName()).distinct().forEach(System.out::println);
-
-
-postProduct.setProviders(resultList);*/
-
-/* other way
-               List<Provider> object=product.getProviders();
-        List<Provider> resultList = new ArrayList<Provider>();
-              Provider providerInstans=new Provider();
-               for(Provider p: object){
-
-                  providerInstans.setName(p.getName());
-
-               }
-
-    resultList.add(providerInstans);
-    postProduct.setProviders(resultList);
-*/
        List<Provider> tempo= product.getProviders();
         Provider providerInstans=new Provider();
         for(Provider p: tempo){
@@ -66,24 +40,45 @@ postProduct.setProviders(resultList);*/
             providerInstans.setName(p.getName());
             providerInstans.setId(p.getId());
                Provider po=providerRepository.findByName(providerInstans.getName());
-             postProduct.addCategory(po);
+             postProduct.addProvider(po);
+
         }
 
-     //   Provider p=providerRepository.findByName(providerInstans.getName());
-       // postProduct.addCategory(p);
+        List<Category> temp= new ArrayList();
+             temp=   product.getCategories();
+        Category categoryInstance=new Category();
+/*        for(Category i:temp) {
+            categoryInstance.setName(i.getName());
 
+            categoryInstance.setId(i.getId());
 
+            // Category a=categoryRepository.findByName("phone");
+            String name = categoryInstance.getName();
+            System.out.println(name);
+            System.out.println("value" + categoryRepository.findById(1));
+            Category a = categoryRepository.findById(1);
+           postProduct.addCategory(a);
 
-       // resultList.removeAll(resultList);
-       // database.removeAll(database);
-       // object.removeAll(object);
-       // System.out.println(resultList.size());
-        //return postProduct;
+        }*/
+        temp.stream().map(x->{
+            categoryInstance.setName(x.getName());
+            categoryInstance.setId(x.getId());
+            String name = categoryInstance.getName();
+            System.out.println(name);
+            System.out.println("value" + categoryRepository.findById(1));
+          //  Category a = categoryRepository.findById(1);
+           Category a=categoryRepository.findById(categoryInstance.getId());
+            postProduct.addCategory(a);
+
+            return x.getName();
+        });
+
         productRepository.save(postProduct);
-
     }
+
     public List<Product> getAllProduct(){
         return productRepository.findAll();
+
     }
     public Product getById(int id){
     Product p=    productRepository.findById(id);
@@ -96,10 +91,24 @@ postProduct.setProviders(resultList);*/
     }
     public Product editProduct(int id,Product product){
         Product editProduct   =  productRepository.findById(id);
-        editProduct.setProviders(product.getProviders());
+      // editProduct.setProviders(product.getProviders());
+        List<Provider> tempEdit= product.getProviders();
+        Provider providerInstans=new Provider();
+        for(Provider p: tempEdit){
+
+            providerInstans.setName(p.getName());
+            providerInstans.setId(p.getId());
+            Provider po=providerRepository.findByName(providerInstans.getName());
+            editProduct.addProvider(po);
+
+        }
         editProduct.setName(product.getName());
         editProduct.setCategories(product.getCategories());
         return editProduct;
     }
+
+
+
+
 
 }

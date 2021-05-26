@@ -19,9 +19,9 @@ public class ProviderService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProviderService(int id){
-
-     return   productRepository.findByProviders(id);
+    public List<Product> getProviderService(String name){
+Provider p=providerRepository.findByName(name);
+     return   productRepository.findByProviders(p.getId());
     }
 
     public List<Provider> getAllProviderService(){

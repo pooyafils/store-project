@@ -14,7 +14,11 @@ public class Product {
     private int id;
     private String name;
    // @JsonBackReference //it can work with one side only dont put it in product
-   @ManyToMany(targetEntity = Category.class,cascade = CascadeType.ALL )
+   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+   @JoinTable(
+           name = "PRODUCT_CATEGORIES",
+           joinColumns = {@JoinColumn(name = "PRODUCTS_ID")},
+           inverseJoinColumns = {@JoinColumn(name = "CATEGORIES_ID")})
 
     private List<Category> categories;
     //@JsonBackReference //it can work with one side only  dont put it in product
@@ -26,10 +30,19 @@ public class Product {
             inverseJoinColumns = {@JoinColumn(name = "PROVIDERS_ID")})
     private List<Provider> providers;
 
-    public void addCategory (Provider p){
+    public void addProvider (Provider p){
         if(providers==null){
             providers=new ArrayList<>();
         }
         providers.add(p);
     }
+
+    public void addCategory (Category cat){
+        if(categories==null){
+            categories=new ArrayList<>();
+        }
+        categories.add(cat);
+
+    }
+
 }

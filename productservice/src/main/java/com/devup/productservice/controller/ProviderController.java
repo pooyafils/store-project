@@ -25,10 +25,10 @@ ProviderService providerService;
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity< List<Product>> getProvider(@PathVariable int id){
+    @GetMapping("/{name}")
+    public ResponseEntity< List<Product>> getProvider(@PathVariable String name){
 
-        return ResponseEntity.ok(providerService.getProviderService(id));
+        return ResponseEntity.ok(providerService.getProviderService(name));
     }
 
     @GetMapping

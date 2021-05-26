@@ -91,19 +91,32 @@ public class ProductService {
     }
     public Product editProduct(int id,Product product){
         Product editProduct   =  productRepository.findById(id);
-      // editProduct.setProviders(product.getProviders());
         List<Provider> tempEdit= product.getProviders();
+        List<Provider> staticLIst=new ArrayList<>();
         Provider providerInstans=new Provider();
         for(Provider p: tempEdit){
+providerInstans.setName(p.getName());
+providerInstans.setId(p.getId());
 
-            providerInstans.setName(p.getName());
-            providerInstans.setId(p.getId());
             Provider po=providerRepository.findByName(providerInstans.getName());
-            editProduct.addProvider(po);
+            staticLIst.add(po);
+
 
         }
+        editProduct.setProviders(staticLIst);
         editProduct.setName(product.getName());
-        editProduct.setCategories(product.getCategories());
+      //  editProduct.setCategories(product.getCategories());
+        List<Category> tempEditCategory= new ArrayList();
+        tempEditCategory=   product.getCategories();
+        List<Category> editCategoryList=new ArrayList<>();
+        Category categoryInstanceEdit=new Category();
+for(Category f:tempEditCategory){
+    categoryInstanceEdit.setName(f.getName());
+    categoryInstanceEdit.setId(f.getId());
+    Category d=categoryRepository.findById(categoryInstanceEdit.getId());
+    editCategoryList.add(d);
+}
+editProduct.setCategories(editCategoryList);
         return editProduct;
     }
 

@@ -28,25 +28,25 @@ public class ProductService {
         this.categoryService = categoryService;
     }
 
-    public void saveProduct(Product product){
-        Product postProduct=new Product();
+    public void saveProduct(Product product) {
+        Product postProduct = new Product();
         postProduct.setCategories(product.getCategories());
         postProduct.setName(product.getName());
 
-       List<Provider> tempo= product.getProviders();
-        Provider providerInstans=new Provider();
-        for(Provider p: tempo){
+        List<Provider> tempProvider = product.getProviders();
+        Provider providerInstants = new Provider();
+        for (Provider p : tempProvider) {
 
-            providerInstans.setName(p.getName());
-            providerInstans.setId(p.getId());
-               Provider po=providerRepository.findByName(providerInstans.getName());
-             postProduct.addProvider(po);
+            providerInstants.setName(p.getName());
+            providerInstants.setId(p.getId());
+            Provider po = providerRepository.findByName(providerInstants.getName());
+            postProduct.addProvider(po);
 
         }
 
-        List<Category> temp= new ArrayList();
-             temp=   product.getCategories();
-        Category categoryInstance=new Category();
+        List<Category> tempCategory = new ArrayList();
+        tempCategory = product.getCategories();
+        Category categoryInstance = new Category();
 /*        for(Category i:temp) {
             categoryInstance.setName(i.getName());
 
@@ -60,15 +60,15 @@ public class ProductService {
            postProduct.addCategory(a);
 
         }*/
-        temp.stream().map(x->{
+        tempCategory.stream().map(x -> {
             categoryInstance.setName(x.getName());
             categoryInstance.setId(x.getId());
             String name = categoryInstance.getName();
             System.out.println(name);
             System.out.println("value" + categoryRepository.findById(1));
-          //  Category a = categoryRepository.findById(1);
-           Category a=categoryRepository.findById(categoryInstance.getId());
-            postProduct.addCategory(a);
+            //  Category a = categoryRepository.findById(1);
+            Category findById = categoryRepository.findById(categoryInstance.getId());
+            postProduct.addCategory(findById);
 
             return x.getName();
         });
@@ -76,52 +76,49 @@ public class ProductService {
         productRepository.save(postProduct);
     }
 
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         return productRepository.findAll();
 
     }
-    public Product getById(int id){
-    Product p=    productRepository.findById(id);
-       return p;
+
+    public Product getById(int id) {
+        Product p = productRepository.findById(id);
+        return p;
     }
-    public Product deleteById(int id){
-        Product product=productRepository.findById(id);
+
+    public Product deleteById(int id) {
+        Product product = productRepository.findById(id);
         productRepository.delete(product);
         return product;
     }
-    public Product editProduct(int id,Product product){
-        Product editProduct   =  productRepository.findById(id);
-        List<Provider> tempEdit= product.getProviders();
-        List<Provider> staticLIst=new ArrayList<>();
-        Provider providerInstans=new Provider();
-        for(Provider p: tempEdit){
-providerInstans.setName(p.getName());
-providerInstans.setId(p.getId());
 
-            Provider po=providerRepository.findByName(providerInstans.getName());
-            staticLIst.add(po);
+    public Product editProduct(int id, Product product) {
+        Product editProduct = productRepository.findById(id);
+        List<Provider> tempEditProvider = product.getProviders();
+        List<Provider> staticProviderList = new ArrayList<>();
+        Provider providerInstanceEdit = new Provider();
+        for (Provider p : tempEditProvider) {
+            providerInstanceEdit.setName(p.getName());
+            providerInstanceEdit.setId(p.getId());
 
-
+            Provider po = providerRepository.findByName(providerInstanceEdit.getName());
+            staticProviderList.add(po);
         }
-        editProduct.setProviders(staticLIst);
+        editProduct.setProviders(staticProviderList);
         editProduct.setName(product.getName());
-      //  editProduct.setCategories(product.getCategories());
-        List<Category> tempEditCategory= new ArrayList();
-        tempEditCategory=   product.getCategories();
-        List<Category> editCategoryList=new ArrayList<>();
-        Category categoryInstanceEdit=new Category();
-for(Category f:tempEditCategory){
-    categoryInstanceEdit.setName(f.getName());
-    categoryInstanceEdit.setId(f.getId());
-    Category d=categoryRepository.findById(categoryInstanceEdit.getId());
-    editCategoryList.add(d);
-}
-editProduct.setCategories(editCategoryList);
+        List<Category> tempEditCategory = new ArrayList();
+        tempEditCategory = product.getCategories();
+        List<Category> editCategoryList = new ArrayList<>();
+        Category categoryInstanceEdit = new Category();
+        for (Category f : tempEditCategory) {
+            categoryInstanceEdit.setName(f.getName());
+            categoryInstanceEdit.setId(f.getId());
+            Category d = categoryRepository.findById(categoryInstanceEdit.getId());
+            editCategoryList.add(d);
+        }
+        editProduct.setCategories(editCategoryList);
         return editProduct;
     }
-
-
-
 
 
 }

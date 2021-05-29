@@ -17,7 +17,7 @@ public class Provider {
     private int id;
     private String name;
     @JsonBackReference //it can work with one side only dont put it in product
-   //@ManyToMany(mappedBy = "providers" ,cascade = CascadeType.ALL)
+    //@ManyToMany(mappedBy = "providers" ,cascade = CascadeType.ALL)
     @ManyToMany(mappedBy = "providers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
     private List<Product> product;

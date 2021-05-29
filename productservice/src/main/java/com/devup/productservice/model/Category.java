@@ -17,6 +17,6 @@ public class Category {
     private int id;
     private String name;
     @JsonBackReference  // it can work with one side only dont put it in product
-    @ManyToMany(mappedBy = "categories",cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Product> products;
 }

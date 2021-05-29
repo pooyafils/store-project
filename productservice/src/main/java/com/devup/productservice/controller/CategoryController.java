@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryController {
     CategoryRepository categoryRepository;
     ProviderRepository providerRepository;
-CategoryService categoryService;
+    CategoryService categoryService;
 
     public CategoryController(CategoryRepository categoryRepository, ProviderRepository providerRepository, CategoryService categoryService) {
         this.categoryRepository = categoryRepository;
@@ -24,16 +24,18 @@ CategoryService categoryService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategory(){
+    public ResponseEntity<List<Category>> getAllCategory() {
         return ResponseEntity.ok(categoryService.getAllCategoryService());
     }
+
     @PostMapping
-    ResponseEntity postCategory(@RequestBody Category category){
+    ResponseEntity postCategory(@RequestBody Category category) {
         categoryService.postCategory(category);
         return ResponseEntity.ok("saved");
     }
-@GetMapping("/{id}")
-    public ResponseEntity<List<Product>> findByCategory(@PathVariable int id){
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Product>> findByCategory(@PathVariable int id) {
         return ResponseEntity.ok(categoryService.findByCategoryService(id));
-}
+    }
 }

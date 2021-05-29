@@ -15,7 +15,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("provider")
 public class ProviderController {
-ProviderService providerService;
+    ProviderService providerService;
     ProviderRepository providerRepository;
     ProductRepository productRepository;
 
@@ -26,32 +26,29 @@ ProviderService providerService;
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity< List<Product>> getProvider(@PathVariable String name){
+    public ResponseEntity<List<Product>> getProvider(@PathVariable String name) {
 
         return ResponseEntity.ok(providerService.getProviderService(name));
     }
 
     @GetMapping
-    public ResponseEntity< List<Provider>> getAllProviders(){
+    public ResponseEntity<List<Provider>> getAllProviders() {
 
         return ResponseEntity.ok(providerService.getAllProviderService());
     }
 
     @PostMapping
-    public ResponseEntity postProvider(@RequestBody Provider provider){
+    public ResponseEntity postProvider(@RequestBody Provider provider) {
         providerService.postProviderService(provider);
         return ResponseEntity.ok("saved");
     }
-    @PutMapping("/{id}")
-    public ResponseEntity editProvider(@PathVariable int id,@RequestBody Provider provider){
 
-        providerService.editProviderService(provider,id);
+    @PutMapping("/{id}")
+    public ResponseEntity editProvider(@PathVariable int id, @RequestBody Provider provider) {
+
+        providerService.editProviderService(provider, id);
         return ResponseEntity.ok("edit has been done!");
     }
-/*    @GetMapping("/a/{id}")
-    public Set<Product> getProviderf(@PathVariable int id){
 
-        return productRepository.findByProviders(id);
-    }*/
 
 }
